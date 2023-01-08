@@ -39,60 +39,107 @@ public class myEventServlet extends HttpServlet {
 		PreparedStatement st=con.prepareStatement(query);
 		st.setInt(1,registerID);
 		ResultSet rs=st.executeQuery();
+		RequestDispatcher rd=request.getRequestDispatcher("nav.html"); 	
+		rd.include(request,response);
 		
-		out.print("<!doctype html>\r\n"
-				+ "<html lang='en'>\r\n"
-				+ "  <head>\r\n"
-				+ "    <meta charset='utf-8'>\r\n"
-				+ "    <meta name='viewport' content='width=device-width, initial-scale=1'>\r\n"
-				+ "    <title>my event</title>\r\n"
-				+ "    <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT' crossorigin='anonymous'>\r\n"
-				+ "  </head>\r\n"
-				+ "  <body>");
-		out.println(" <a href=\"home.jsp\">Back home</a>");
+		String blogerror="";
+		
 		int i=1;
-		out.println("<h1>my event</h1>");
+		
 
 		if(request.getAttribute("error")!=null) {
-		out.print(request.getAttribute("error").toString());
+			blogerror=request.getAttribute("error").toString();
+//		out.print(request.getAttribute("error").toString());
 		}
 		
 		if(!rs.next()) {
-			out.print("No event Found");
+			blogerror="No Blog Found";
+//			out.print("No event Found");
 		}
+		
+		
+		out.print("<!DOCTYPE html>\r\n"
+				+ "<html lang=\"en\">\r\n"
+				+ "\r\n"
+				+ "<head>\r\n"
+				+ "    <meta charset=\"utf-8\">\r\n"
+				+ "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, shrink-to-fit=no\">\r\n"
+				+ "    <title>eventList</title>\r\n"
+				+ "    <link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css\">\r\n"
+				+ "    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css\">\r\n"
+				+ "    <link rel=\"stylesheet\" href=\"assets/css/Apple-Navbar-Cinel.css\">\r\n"
+				+ "    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css\">\r\n"
+				+ "</head>");
+		out.print("<body style=\"background: rgb(255,255,255);\">");
+		out.print("    <div class=\"container\">\r\n"
+				+ "        <div class=\"row\">\r\n"
+				+ "            <div class=\"col-md-12\">\r\n"
+				+ "                \r\n"
+				+ "\r\n"
+				+ "                \r\n"
+				+ "            </div>\r\n"
+				+ "        </div>\r\n"
+				+ "        <div class=\"row\">\r\n"
+				+ "            <div class=\"col\" style=\"background: rgba(77,53,53,0);color: rgba(255,255,255,0);\">\r\n"
+				+ "                <h1>Description</h1>\r\n"
+				+ "            </div>\r\n"
+				+ "        </div>\r\n"
+				+ "    </div>");
 
+		out.print("<h1 style=\"margin-left: 20px;padding-top: 27px;\">MY BLOG</h1>");
+		out.print("<h6 style=\"margin-left: 20px; color: rgb(239,72,0); padding-top: 5px;\">"+blogerror+"</h6>");
+		
 			
 					do {
-			int eventID =Integer.parseInt( rs.getString(10));
-			out.print("<div class=\"card\">\r\n"
-					+ "  <div class=\"card-body\">");
-			out.println();
-			out.println("<p> <h3> Event Id");
-			out.println(" "+eventID+"<br> ");
-			out.println(" </h3></p> ");
-			out.print("<b>registerID  </b> "+rs.getInt(1)+"<br> ");
+						int eventID =Integer.parseInt( rs.getString(10));
+						
+					
+						out.print(" <div class=\"col-md-12\">\r\n"
+								+ "        <h3 style=\"margin-left: 20px;padding-top: 27px;\">Blog Name "+rs.getString(3)+"</h3>\r\n"
+								+ "        <h4 style=\"margin-left: 20px;\">Description"+rs.getString(4)+"</h4>\r\n"
+								+ "        <h6 style=\"margin-left: 20px;\">Upload Date"+rs.getString(8)+"</h6>\r\n"
+								+ "      <h6 style=\"margin-left: 20px;width: 1171px;font-size: 18px;margin-top: 5px;\"><a class=\"btn btn-warning btn-sm\" role=\"button\" style=\"margin-right: 5px;background: rgb(255,191,0);border-radius: 10px;\" href =\"viewEventServlet?eventID="+eventID+"\">View</a><a class=\"btn btn-light btn-sm\" role=\"button\" style=\"margin-left: 5px;margin-right: 5px;background: rgb(211,233,255);border-radius: 9px;\" href =\"editEventServlet?eventID="+eventID+"\">Edit</a><a class=\"btn btn-secondary btn-sm\" role=\"button\" style=\"margin-left: 5px;background: rgb(25,53,78);border-radius: 10px;\" href=\"deleteEventServlet?eventID="+eventID+"\">Delete</a></h6>\r\n"
+								+ "    </div>");
+				
+						out.print("<hr class=\"mt-0\">");
+						
+		
 			
-			out.print("<b>name  </b> "+rs.getString(2)+"<br> ");
-			out.print("<b>Event Name  </b>  "+rs.getString(3)+"<br> ");
-			out.print("<b>College  </b>  "+rs.getString(4)+"<br> ");
-			out.print("<b>Persion Incharge  </b>  "+rs.getString(5)+"<br> ");
+//			out.println(" "+eventID+"<br> ");
+//			
+//			out.print("<b>registerID  </b> "+rs.getInt(1)+"<br> ");
+//			
+//			out.print("<b>name  </b> "+rs.getString(2)+"<br> ");
+//			out.print("<b>Event Name  </b>  "+rs.getString(3)+"<br> ");
+//			out.print("<b>College  </b>  "+rs.getString(4)+"<br> ");
+//			out.print("<b>Persion Incharge  </b>  "+rs.getString(5)+"<br> ");
+//			
+//			out.print("<b>Department  </b>  "+rs.getString(6)+"<br> ");
+//			
+//			out.print("<b>Event Detail  </b>"+rs.getString(7)+"<br> ");
+//			out.print("<b>Upload Date</b>  "+rs.getString(8)+"<br> ");
+//			out.println("<b>Time</b>  "+rs.getString(9)+"<br> ");
+//			out.println("<a href='viewEventServlet?eventID="+eventID+"'>view</a>");
+//			out.print("<a href='editEventServlet?eventID="+eventID +"'>edit</a>  ");
+//			out.println("<a href='deleteEventServlet?eventID="+eventID+"'>delete</a>");
 			
-			out.print("<b>Department  </b>  "+rs.getString(6)+"<br> ");
 			
-			out.print("<b>Event Detail  </b>"+rs.getString(7)+"<br> ");
-			out.print("<b>Upload Date</b>  "+rs.getString(8)+"<br> ");
-			out.println("<b>Time</b>  "+rs.getString(9)+"<br> ");
-			out.println("<a href='viewEventServlet?eventID="+eventID+"'>view</a>");
-			out.print("<a href='editEventServlet?eventID="+eventID +"'>edit</a>  ");
-			out.println("<a href='deleteEventServlet?eventID="+eventID+"'>delete</a>");
-			
-			out.print("</div>\r\n"
-					+ "</div>");
 			i++;
+			
+			
+			
+			
+		
 		}while(rs.next());
-		out.print("  <script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js\" integrity=\"sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8\" crossorigin=\"anonymous\"></script>\r\n"
-				+ "  </body>\r\n"
-				+ "</html>");
+		
+			out.print(" <script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js\"></script>\r\n"
+					+ "    <script src=\"assets/eventlistPageAssets/eventlistPageassets/eventlistPageAssets/js/bs-init.js\"></script>\r\n"
+					+ "</body>\r\n"
+					+ "\r\n"
+					+ "</html>");		
+					
+					
+					
 		}catch(Exception e)
 		{
 			System.out.println(e);

@@ -70,7 +70,7 @@ public class editEventServlet extends HttpServlet {
 			{
 				
 				out.println("<a href='home.jsp'>home</a>   ");
-				out.println("event does not belong to you");
+				out.println("Blog does not belong to you");
 			}
 			
 		} catch (SQLException e) {

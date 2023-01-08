@@ -54,16 +54,23 @@ public class deleteEventServlet extends HttpServlet {
 			st = con.prepareStatement(query);
 			st.setInt(1, eventId);
 			st.executeUpdate();
-			String msg="Your post is Deleted";	
+			String msg="Your post and Comment is Deleted";	
 			request.setAttribute("error",msg);
 			RequestDispatcher rd=request.getRequestDispatcher("myEventServlet"); 	
 			rd.include(request,response);
 		}
 			else {
-				String msg="Facing problem while deleting comment on event";	
+				st = con.prepareStatement(query);
+				st.setInt(1, eventId);
+				st.executeUpdate();
+				String msg="Your post is Deleted";	
 				request.setAttribute("error",msg);
-				RequestDispatcher rd=request.getRequestDispatcher("home.jsp"); 	
-				rd.forward(request,response);
+				RequestDispatcher rd=request.getRequestDispatcher("myEventServlet"); 	
+				rd.include(request,response);
+//				String msg="Facing problem while deleting comment on event";	
+//				request.setAttribute("error",msg);
+//				RequestDispatcher rd=request.getRequestDispatcher("home.jsp"); 	
+//				rd.forward(request,response);
 		}
 		}
 		else
